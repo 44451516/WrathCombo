@@ -142,7 +142,7 @@ internal sealed class ActionReplacer : IDisposable
     {
         FilteredCombos = CustomCombos.Where(x => x.Preset.Attributes() is not null && x.Preset.Attributes().IsPvP == CustomComboFunctions.InPvP() && ((x.Preset.Attributes().RoleAttribute is not null && x.Preset.Attributes().RoleAttribute.PlayerIsRole()) || x.Preset.Attributes().CustomComboInfo.JobID == Player.JobId || x.Preset.Attributes().CustomComboInfo.JobID == CustomComboFunctions.JobIDs.ClassToJob(Player.JobId)));
         var filteredCombos = FilteredCombos as CustomCombo[] ?? FilteredCombos.ToArray();
-        Svc.Log.Debug($"Now running {filteredCombos.Count()} combos\n{string.Join("\n", filteredCombos.Select(x => x.Preset.Attributes().CustomComboInfo.Name))}");
+        Svc.Log.Debug($"Now running {filteredCombos.Count()} combos\n{string.Join("\n", filteredCombos.Select(x => x.Preset.Attributes().CustomComboInfo.FancyName))}");
     }
 
     #endregion

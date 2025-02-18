@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using WrathCombo.Combos.PvE;
 using WrathCombo.CustomComboNS.Functions;
+using WrathCombo.Translatezh;
 
 namespace WrathCombo.Attributes
 {
@@ -15,22 +16,123 @@ namespace WrathCombo.Attributes
     internal class CustomComboInfoAttribute : Attribute
     {
         /// <summary> Initializes a new instance of the <see cref="CustomComboInfoAttribute"/> class. </summary>
-        /// <param name="name"> Display name. </param>
+        /// <param name="fancyName"> Display name. </param>
         /// <param name="description"> Combo description. </param>
         /// <param name="jobID"> Associated job ID. </param>
         /// <param name="order"> Display order. </param>
         //// <param name="memeName"> Display meme name </param>
         //// <param name="memeDescription"> Meme description. </param>
-        internal CustomComboInfoAttribute(string name, string description, byte jobID, [CallerLineNumber] int order = 0)
+        internal CustomComboInfoAttribute(string fancyName, string description, byte jobID, [CallerLineNumber] int order = 0)
         {
-            Name = name;
+            var 原始fancyName = fancyName;
+            var 原始description = description;
+            var 增加搜索 = true;
+            var fancyName技能翻译 = true;
+            var description技能翻译 = true;
+            var saveWord = "等待翻译";
+            
+            
+            // if (Service.Configuration != null)
+            {
+                // if (Service.Configuration.Language == "zh-CN")
+                {
+                    Dictionary<string, string> db = Translatezh_CN.db;
+                    Dictionary<string, string> dbActionName = Translatezh_CN_DBActionName.dbActionName;
+            
+                    if (db.ContainsKey(原始fancyName))
+                    {
+                        if (db[原始fancyName] != saveWord)
+                        {
+                            fancyName = db[原始fancyName];
+                            增加搜索 = false;
+                            fancyName技能翻译 = false;
+                        }
+                    }
+            
+                    if (fancyName技能翻译)
+                    {
+                        ProcessingActionName(原始fancyName, dbActionName, out fancyName);
+                        if (fancyName != 原始fancyName)
+                        {
+                            db[原始fancyName] = fancyName;
+                            增加搜索 = false;
+                        }
+                    }
+            
+            
+            
+                    if (db.ContainsKey(原始description))
+                    {
+                        if (db[原始description] != saveWord)
+                        {
+                            description = db[原始description];
+                            description技能翻译 = false;
+                            增加搜索 = false;
+                        }
+                    }
+            
+                    if (description技能翻译)
+                    {
+                        ProcessingActionName(原始description, dbActionName, out description);
+            
+                        if (description != 原始description)
+                        {
+                            db[原始description] = description;
+                            增加搜索 = false;
+            
+                        }
+                    }
+            
+            
+                    if (增加搜索)
+                    {
+                        try
+                        {
+                            var replaceOption = fancyName.Replace(" Option", "");
+            
+                            if (db.ContainsKey($"{replaceOption}"))
+                            {
+                                fancyName = db[$"{replaceOption}"];
+                            }
+            
+                            if (db.ContainsKey($"{replaceOption}"))
+                            {
+                                description = db[$"{replaceOption}"];
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            // PluginLog.Information($"log fancyName:{fancyName} description:{description} {e.Message}");
+            
+                            // Console.WriteLine(e);
+                            // throw;
+                        }
+                    }
+                }
+            }
+            
+            
+            if (增加搜索)
+            {
+                if (fancyName == saveWord)
+                {
+                    fancyName = 原始fancyName;
+                }
+            
+                if (description == saveWord)
+                {
+                    description = 原始description;
+                }
+            }
+
+            FancyName = fancyName;
             Description = description;
             JobID = jobID;
             Order = order;
         }
 
         /// <summary> Gets the display name. </summary>
-        public string Name { get; }
+        public string FancyName { get; }
 
         /// <summary> Gets the description. </summary>
         public string Description { get; }
@@ -114,6 +216,47 @@ namespace WrathCombo.Attributes
 
             } //Misc or unknown
             else return key == 99 ? "Global" : "Unknown";
+        }
+        
+        public static void ProcessingActionName(string sentence, Dictionary<string, string> dbActionName, out string output)
+        {
+            output = sentence;
+            var split_sentence = sentence.Replace('\n', ' ').Split(' ');
+            for (int i = 0; i < split_sentence.Length; i++)
+            {
+                if (split_sentence[i].Contains("/"))
+                {
+                    if (dbActionName.ContainsKey(split_sentence[i]))
+                    {
+                        split_sentence[i] = dbActionName[split_sentence[i]];
+                    }
+                }
+
+                if (i < split_sentence.Length - 2)
+                {
+                    var new_word = split_sentence[i] + " " + split_sentence[i + 1] + " " + split_sentence[i + 2];
+                    if (dbActionName.ContainsKey(new_word))
+                    {
+                        output = output.Replace(new_word, dbActionName[new_word]);
+                        continue;
+                    }
+                }
+
+                if (i < split_sentence.Length - 1)
+                {
+                    var new_word = split_sentence[i] + " " + split_sentence[i + 1];
+                    if (dbActionName.ContainsKey(new_word))
+                    {
+                        output = output.Replace(new_word, dbActionName[new_word]);
+                        continue;
+                    }
+                }
+
+                if (dbActionName.ContainsKey(split_sentence[i]))
+                {
+                    output = output.Replace(split_sentence[i], dbActionName[split_sentence[i]]);
+                }
+            }
         }
     }
 }

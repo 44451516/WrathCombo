@@ -20,8 +20,8 @@ namespace WrathCombo.Window.Tabs
         private static uint _selectedNpc = 0;
         internal static new void Draw()
         {
-            ImGui.TextWrapped($"This is where you can configure the parameters in which Auto-Rotation will operate. " +
-                $"Features marked with an 'Auto-Mode' checkbox are able to be used with Auto-Rotation.");
+            ImGui.TextWrapped($"在这里，你可以配置自动循环运行时的参数。 " +
+                              $"标记有‘自动模式’复选框的功能可以与自动循环一起使用。");
             ImGui.Separator();
 
             var cfg = Service.Configuration.RotationConfig;
@@ -29,9 +29,9 @@ namespace WrathCombo.Window.Tabs
 
             if (P.UIHelper.ShowIPCControlledIndicatorIfNeeded())
                 changed |= P.UIHelper.ShowIPCControlledCheckboxIfNeeded(
-                    "Enable Auto-Rotation", ref cfg.Enabled);
+                    "Enable 自动循环1", ref cfg.Enabled);
             else
-                changed |= ImGui.Checkbox($"Enable Auto-Rotation", ref cfg.Enabled);
+                changed |= ImGui.Checkbox($"Enable 自动循环2", ref cfg.Enabled);
             if (P.IPC.GetAutoRotationState())
             {
                 var inCombatOnly = (bool)P.IPC.GetAutoRotationConfigState(
@@ -41,17 +41,17 @@ namespace WrathCombo.Window.Tabs
                 P.UIHelper.ShowIPCControlledIndicatorIfNeeded("InCombatOnly");
                 ImGuiExtensions.Prefix(!inCombatOnly);
                 changed |= P.UIHelper.ShowIPCControlledCheckboxIfNeeded(
-                    "Only in Combat", ref cfg.InCombatOnly, "InCombatOnly");
+                    "仅在战斗中", ref cfg.InCombatOnly, "InCombatOnly");
 
                 if (inCombatOnly)
                 {
                     ImGuiExtensions.Prefix(false);
-                    changed |= ImGui.Checkbox($"Bypass Only in Combat for Quest Targets", ref cfg.BypassQuest);
-                    ImGuiComponents.HelpMarker("Disables Auto-Mode outside of combat unless you're within range of a quest target.");
+                    changed |= ImGui.Checkbox($"仅在战斗中对任务目标", ref cfg.BypassQuest);
+                    ImGuiComponents.HelpMarker("在战斗外禁用自动模式，除非你在任务目标的范围内");
 
                     ImGuiExtensions.Prefix(false);
-                    changed |= ImGui.Checkbox($"Bypass Only in Combat for FATE Targets", ref cfg.BypassFATE);
-                    ImGuiComponents.HelpMarker("Disables Auto-Mode outside of combat unless you're synced to a FATE.");
+                    changed |= ImGui.Checkbox($"仅在战斗中对FATE目标", ref cfg.BypassFATE);
+                    ImGuiComponents.HelpMarker("在战斗外禁用自动模式，除非你同步到FATE");
 
                     ImGuiExtensions.Prefix(true);
                     ImGui.SetNextItemWidth(100f.Scale());

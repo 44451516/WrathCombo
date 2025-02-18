@@ -421,17 +421,17 @@ public class Search(Leasing leasing)
                 .ToDictionary(
                     g => g.Key,
                     g => g.GroupBy(x =>
-                            x.Info.Name.Contains("heals - single", ToLower)
+                            x.Info.FancyName.Contains("heals - single", ToLower)
                                 ? ComboTargetTypeKeys.HealST
-                                : x.Info.Name.Contains("heals - aoe", ToLower)
+                                : x.Info.FancyName.Contains("heals - aoe", ToLower)
                                     ? ComboTargetTypeKeys.HealMT
-                                    : x.Info.Name.Contains("- aoe", ToLower) ||
-                                      x.Info.Name.Contains("aoe dps feature",
+                                    : x.Info.FancyName.Contains("- aoe", ToLower) ||
+                                      x.Info.FancyName.Contains("aoe dps feature",
                                           ToLower)
                                         ? ComboTargetTypeKeys.MultiTarget
-                                        : x.Info.Name.Contains("- single target",
+                                        : x.Info.FancyName.Contains("- single target",
                                               ToLower) ||
-                                          x.Info.Name.Contains(
+                                          x.Info.FancyName.Contains(
                                               "single target dps feature",
                                               ToLower)
                                             ? ComboTargetTypeKeys.SingleTarget
@@ -440,11 +440,11 @@ public class Search(Leasing leasing)
                         .ToDictionary(
                             g2 => g2.Key,
                             g2 => g2.GroupBy(x =>
-                                    x.Info.Name.Contains("advanced mode -",
+                                    x.Info.FancyName.Contains("advanced mode -",
                                         ToLower) ||
-                                    x.Info.Name.Contains("dps feature", ToLower)
+                                    x.Info.FancyName.Contains("dps feature", ToLower)
                                         ? ComboSimplicityLevelKeys.Advanced
-                                        : x.Info.Name.Contains("simple mode -",
+                                        : x.Info.FancyName.Contains("simple mode -",
                                             ToLower)
                                             ? ComboSimplicityLevelKeys.Simple
                                             : ComboSimplicityLevelKeys.Other

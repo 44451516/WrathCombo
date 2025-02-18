@@ -105,12 +105,12 @@ namespace WrathCombo.Window.Functions
                 ImGui.Separator();
             }
 
-            if (info.Name.Contains(" - AoE") || info.Name.Contains(" - Sin"))
+            if (info.FancyName.Contains(" - AoE") || info.FancyName.Contains(" - Sin"))
                 if (P.UIHelper.PresetControlled(preset) is not null)
                     P.UIHelper.ShowIPCControlledIndicatorIfNeeded(preset);
 
             if (P.UIHelper.ShowIPCControlledCheckboxIfNeeded
-                    ($"{info.Name}###{preset}", ref enabled, preset, true))
+                    ($"{info.FancyName}###{preset}", ref enabled, preset, true))
             {
                 if (enabled)
                 {
@@ -161,7 +161,7 @@ namespace WrathCombo.Window.Functions
                 foreach (var conflict in conflicts)
                 {
                     var comboInfo = Attributes[conflict].CustomComboInfo;
-                    conflictBuilder.Insert(0, $"{comboInfo.Name}");
+                    conflictBuilder.Insert(0, $"{comboInfo.FancyName}");
                     var par2 = conflict;
 
                     while (PresetStorage.GetParent(par2) != null)
@@ -169,7 +169,7 @@ namespace WrathCombo.Window.Functions
                         var subpar = PresetStorage.GetParent(par2);
                         if (subpar != null)
                         {
-                            conflictBuilder.Insert(0, $"{Attributes[subpar.Value].CustomComboInfo.Name} -> ");
+                            conflictBuilder.Insert(0, $"{Attributes[subpar.Value].CustomComboInfo.FancyName} -> ");
                             par2 = subpar!.Value;
                         }
 
@@ -210,14 +210,14 @@ namespace WrathCombo.Window.Functions
                 StringBuilder builder = new();
                 foreach (var par in variantParents.ParentPresets)
                 {
-                    builder.Insert(0, $"{(Attributes.ContainsKey(par) ? Attributes[par].CustomComboInfo.Name : par.GetAttribute<CustomComboInfoAttribute>().Name)}");
+                    builder.Insert(0, $"{(Attributes.ContainsKey(par) ? Attributes[par].CustomComboInfo.FancyName : par.GetAttribute<CustomComboInfoAttribute>().FancyName)}");
                     var par2 = par;
                     while (PresetStorage.GetParent(par2) != null)
                     {
                         var subpar = PresetStorage.GetParent(par2);
                         if (subpar != null)
                         {
-                            builder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo.Name : subpar?.GetAttribute<CustomComboInfoAttribute>().Name)} -> ");
+                            builder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo.FancyName : subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName)} -> ");
                             par2 = subpar!.Value;
                         }
 
@@ -236,14 +236,14 @@ namespace WrathCombo.Window.Functions
                 StringBuilder builder = new();
                 foreach (var par in bozjaParents.ParentPresets)
                 {
-                    builder.Insert(0, $"{(Attributes.ContainsKey(par) ? Attributes[par].CustomComboInfo.Name : par.GetAttribute<CustomComboInfoAttribute>().Name)}");
+                    builder.Insert(0, $"{(Attributes.ContainsKey(par) ? Attributes[par].CustomComboInfo.FancyName : par.GetAttribute<CustomComboInfoAttribute>().FancyName)}");
                     var par2 = par;
                     while (PresetStorage.GetParent(par2) != null)
                     {
                         var subpar = PresetStorage.GetParent(par2);
                         if (subpar != null)
                         {
-                            builder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo.Name : subpar?.GetAttribute<CustomComboInfoAttribute>().Name)} -> ");
+                            builder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo.FancyName : subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName)} -> ");
                             par2 = subpar!.Value;
                         }
 
@@ -262,14 +262,14 @@ namespace WrathCombo.Window.Functions
                 StringBuilder builder = new();
                 foreach (var par in eurekaParents.ParentPresets)
                 {
-                    builder.Insert(0, $"{(Attributes.ContainsKey(par) ? Attributes[par].CustomComboInfo.Name : par.GetAttribute<CustomComboInfoAttribute>().Name)}");
+                    builder.Insert(0, $"{(Attributes.ContainsKey(par) ? Attributes[par].CustomComboInfo.FancyName : par.GetAttribute<CustomComboInfoAttribute>().FancyName)}");
                     var par2 = par;
                     while (PresetStorage.GetParent(par2) != null)
                     {
                         var subpar = PresetStorage.GetParent(par2);
                         if (subpar != null)
                         {
-                            builder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo.Name : subpar?.GetAttribute<CustomComboInfoAttribute>().Name)} -> ");
+                            builder.Insert(0, $"{(Attributes.ContainsKey(subpar.Value) ? Attributes[subpar.Value].CustomComboInfo.FancyName : subpar?.GetAttribute<CustomComboInfoAttribute>().FancyName)} -> ");
                             par2 = subpar!.Value;
                         }
 
