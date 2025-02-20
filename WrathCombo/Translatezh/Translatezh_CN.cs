@@ -1022,7 +1022,6 @@ public class Translatezh_CN
         { "Replaces Split Shot with a full one-button single target rotation.\nThese features are ideal if you want to customize the rotation.", "用单按钮单体循环替换分裂射击。\n如果你想自定义循环，这些功能是理想的。" },
         { "Balance Opener", "平衡起手式（机翻）" },
         { "Adds the Balance opener at lvl 90+.", "在90级及以上添加平衡起手式。（机翻）" },
-        { "Adds the Balance opener at lvl 90+.", "等待翻译" },
         { "Barrel Stabilizer Option", "枪管加热选项" },
         { "Adds Barrel Stabilizer to the rotation.", "将枪管加热添加到循环中。" },
         { "Full Metal Field Option", "全金属爆发选项" },
