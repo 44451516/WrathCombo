@@ -44,7 +44,7 @@
 		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<OutputPath>$(DalamudDevPlugins)</OutputPath>
+		<OutputPath>E:\Games\FFVIX\Dalamud6.0\XIVLauncher\devPlugins\WrathCombo\</OutputPath>
 		<NoWarn>CS1591</NoWarn>
 	</PropertyGroup>
 
